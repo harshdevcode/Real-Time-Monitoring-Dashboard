@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* ─── Custom keyframes ──────────────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── Scrollbar styling ──────────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a3348 transparent;
+}
+*::-webkit-scrollbar       { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #2a3348; border-radius: 2px; }
+
+/* ─── Scanline overlay ───────────────────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.025) 2px,
+    rgba(0, 0, 0, 0.025) 4px
+  );
+}
+
+/* ─── Font base ──────────────────────────────────────────────────────────────── */
+html, body {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  height: 100%;
+}
