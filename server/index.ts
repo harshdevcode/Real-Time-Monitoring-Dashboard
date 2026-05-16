@@ -1,4 +1,4 @@
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocketServer, WebSocket, type RawData } from "ws";
 import { IncomingMessage } from "http";
 import {
   WsClientMessage,
@@ -56,7 +56,7 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
   };
   clients.set(ws, clientState);
 
-  ws.on("message", (raw) => {
+  ws.on("message", (raw: RawData) => {
     let msg: WsClientMessage;
     try {
       msg = JSON.parse(raw.toString());
@@ -87,7 +87,7 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     console.log(`[ws] client disconnected — ${ip}`);
   });
 
-  ws.on("error", (err) => {
+  ws.on("error", (err: Error) => {
     console.error(`[ws] error — ${ip}:`, err.message);
   });
 });

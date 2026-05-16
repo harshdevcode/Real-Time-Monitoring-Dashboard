@@ -1,4 +1,5 @@
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocketServer, WebSocket, type RawData } from "ws";
+import { IncomingMessage } from "http";
 import { format } from "date-fns";
 import { TenantEngine } from "./tenantEngine";
 import { SubscriptionRegistry } from "./subscriptionRegistry";
@@ -33,7 +34,7 @@ const engines = new Map<TenantId, TenantEngine>(
 console.log(`[server] InfraWatch WS server starting on ws://localhost:${PORT}`);
 
 // ─── Connection handler ───────────────────────────────────────────────────────
-wss.on("connection", (ws: WebSocket, req) => {
+wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
   const ip = req.socket.remoteAddress ?? "unknown";
   console.log(`[server] new connection from ${ip} — total: ${wss.clients.size}`);
 
@@ -46,7 +47,7 @@ wss.on("connection", (ws: WebSocket, req) => {
   ws.send(JSON.stringify(ack));
 
   // ── Inbound message handler ───────────────────────────────────────────────
-  ws.on("message", (raw) => {
+  ws.on("message", (raw: RawData) => {
     let msg: ClientMessage;
     try {
       msg = JSON.parse(raw.toString()) as ClientMessage;
@@ -83,7 +84,7 @@ wss.on("connection", (ws: WebSocket, req) => {
     console.log(`[server] client disconnected — remaining: ${wss.clients.size}`);
   });
 
-  ws.on("error", (err) => {
+  ws.on("error", (err: Error) => {
     console.error("[server] ws error:", err.message);
     registry.remove(ws);
   });
