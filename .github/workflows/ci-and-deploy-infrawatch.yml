@@ -45,6 +45,7 @@ jobs:
           node-version: "20.x"
           cache: "npm"
       - run: npm ci
+      - run: cd server && npm ci
       - run: npm run deploy
 
   deploy:
@@ -62,6 +63,7 @@ jobs:
           node-version: "20.x"
           cache: "npm"
       - run: npm ci
+      - run: cd server && npm ci
       - run: npm run deploy
       - uses: peaceiris/actions-gh-pages@v4
         with:
