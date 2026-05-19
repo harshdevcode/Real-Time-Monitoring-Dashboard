@@ -2,8 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
-  basePath: '/infrawatch',
+  basePath: '/Real-Time-Monitoring-Dashboard',
   trailingSlash: true,
 };
-
 export default nextConfig;
